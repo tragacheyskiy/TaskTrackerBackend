@@ -27,12 +27,35 @@ namespace TaskTrackerBackend.Data.Migrations
                 {
                     table.PrimaryKey("PK_project", x => x.id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "project_task",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    description = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    project_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: true),
+                    priority = table.Column<int>(type: "integer", nullable: true),
+                    data = table.Column<string>(type: "jsonb", nullable: true),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
+                    modified_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    deleted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_project_task", x => x.id);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "project");
+
+            migrationBuilder.DropTable(
+                name: "project_task");
         }
     }
 }

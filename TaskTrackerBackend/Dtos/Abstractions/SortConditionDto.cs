@@ -1,4 +1,4 @@
-﻿namespace TaskTrackerBackend.Dtos;
+﻿namespace TaskTrackerBackend.Dtos.Abstractions;
 
 public abstract class SortConditionDto
 {

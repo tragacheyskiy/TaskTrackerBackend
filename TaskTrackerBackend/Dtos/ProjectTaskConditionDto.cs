@@ -4,18 +4,21 @@ using TaskTrackerBackend.Dtos.Abstractions;
 
 namespace TaskTrackerBackend.Dtos;
 
-public sealed class ProjectConditionDto : SortConditionDto
+public sealed class ProjectTaskConditionDto : SortConditionDto
 {
+    [Required]
+    public Guid? ProjectId { get; set; }
+
     [StringLength(256)]
     public string? Name { get; set; }
 
-    [Range(0, 2)]
-    public ProjectStatus? Status { get; set; }
+    [StringLength(256)]
+    public string? Description { get; set; }
 
-    public int? StartDateFrom { get; set; }
-    public int? StartDateTo { get; set; }
-    public int? CompletitionDateFrom { get; set; }
-    public int? CompletitionDateTo { get; set; }
+    [Range(0, 2)]
+    public ProjectTaskStatus? Status { get; set; }
+
     public int? PriorityFrom { get; set; }
     public int? PriorityTo { get; set; }
+    public string? Data { get; set; }
 }

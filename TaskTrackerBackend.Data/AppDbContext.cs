@@ -10,6 +10,7 @@ public sealed class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     public DbSet<Project> Projects { get; set; } = default!;
+    public DbSet<ProjectTask> ProjectTasks { get; set; } = default!;
 
     public Task<bool> EntityExistsAsync<TEntity>(Guid id)
     where TEntity : BaseModel

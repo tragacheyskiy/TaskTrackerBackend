@@ -9,7 +9,10 @@ using TaskTrackerBackend.Domain.Models;
 using TaskTrackerBackend.Domain.Providers;
 using TaskTrackerBackend.Domain.Providers.Abstractions;
 using TaskTrackerBackend.Domain.Queries;
+using TaskTrackerBackend.Dtos;
 using TaskTrackerBackend.Options;
+using TaskTrackerBackend.Validation;
+using TaskTrackerBackend.Validation.Abstractions;
 
 namespace TaskTrackerBackend;
 
@@ -33,7 +36,7 @@ internal static class ServicesConfiguration
         builder.Services
             .Configure<DbOptions>(options => builder.Configuration.GetRequiredSection(nameof(DbOptions)).Bind(options))
             .AddSingleton<IDateTimeProvider, DateTimeProvider>()
-            .AddScoped<AppDbContext>();
+            .AddScoped<IValidationService<NewProjectTaskDto>, ProjectTaskValidationService>();
     }
 
     private static IServiceCollection AddCommandsAndQueries(this IServiceCollection services)
@@ -57,7 +60,6 @@ internal static class ServicesConfiguration
         Type commandService = typeof(ICommandService<>);
         Type queryService = typeof(IQueryService<,>);
 
-
         var mappings = from type in types
                        where !type.IsAbstract && !type.IsGenericType
                        from i in type.GetInterfaces()
@@ -72,6 +74,7 @@ internal static class ServicesConfiguration
         }
 
         services.TryAddScoped<IQueryService<EntityExistsQuery<Project>, bool>, EntityExistsQueryService<Project>>();
+        services.TryAddScoped<IQueryService<EntityExistsQuery<ProjectTask>, bool>, EntityExistsQueryService<ProjectTask>>();
 
         return services;
     }

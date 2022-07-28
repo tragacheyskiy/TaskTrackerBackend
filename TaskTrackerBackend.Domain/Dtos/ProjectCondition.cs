@@ -1,12 +1,13 @@
-﻿using TaskTrackerBackend.Domain.Models.Enums;
+﻿using TaskTrackerBackend.Domain.Dtos.Abstractions;
+using TaskTrackerBackend.Domain.Models.Enums;
 
 namespace TaskTrackerBackend.Domain.Dtos;
 
 public sealed class ProjectCondition : SortCondition
 {
     public ProjectCondition(
-        string? name, int? startDateFrom, int? startDateTo, int? completitionDateFrom, int? completitionDateTo,
-        ProjectStatus? status, int? priorityFrom, int? priorityTo, string? sortBy, bool? isSortAscending) : base(sortBy, isSortAscending ?? true)
+        string? name, int? startDateFrom, int? startDateTo, int? completitionDateFrom, int? completitionDateTo, ProjectStatus? status,
+        int? priorityFrom, int? priorityTo, string? sortBy, bool? isSortAscending) : base(sortBy, isSortAscending ?? true)
     {
         Name = name;
         StartDateFrom = startDateFrom;
