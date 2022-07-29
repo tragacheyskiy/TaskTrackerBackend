@@ -7,6 +7,8 @@ namespace TaskTrackerBackend;
 
 internal static class AppConfiguration
 {
+    private const string DbMigrationCommand = "-m";
+
     public static WebApplication ConfigureApp(this WebApplication app, string[] args)
     {
         ArgumentNullException.ThrowIfNull(args);
@@ -15,8 +17,9 @@ internal static class AppConfiguration
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             bool exists = (dbContext.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator)!.Exists();
+            bool isCommand = args.Length > 0 && args[0] == DbMigrationCommand;
 
-            if (!exists)
+            if (!exists || isCommand)
                 dbContext.Database.Migrate();
         }
 
